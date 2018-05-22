@@ -5,7 +5,6 @@ import cv2
 import scipy.io as sio
 import glob
 import numpy as np
-import tensorflow.keras.preprocessing.image
 ''' Works with tensorflow >= 1.5 '''
 
 # SPECIFY PATH TO THE DATASET
@@ -25,10 +24,10 @@ def main():
     for p in path_to_images:
       # FILL IN TO LOAD IMAGE, PREPROCESS, EXTRACT FEATURES. 
       # OUTPUT VARIABLE F EXPECTED TO BE THE FEATURE OF THE IMAGE OF DIMENSION (2048,)
-      img = image.load_img(path_to_image, target_size=(224,224))
-      x = image.img_to_array(img)
+      img = tf.keras.preprocessing.image.load_img(p, target_size = (224,224))
+      x = tf.keras.preprocessing.image.img_to_array(img)
       x = np.expand_dims(x, axis = 0)
-      x = preprocess_input(x)
+      x = tf.keras.applications.resnet50.preprocess_input(x)
       
       F = resnet.predict(x)
 
